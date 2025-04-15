@@ -17,7 +17,7 @@ import threading  # Used for server stop event
 import time  # Used for server stop event
 import inspect  # Used in log_llm_interaction (decorator mode)
 from typing import Dict, List, Any, Optional, Callable, TypeVar  # Keep needed types
-from datetime import datetime, UTC  # Keep needed datetime objects
+from datetime import datetime, timezone  # Keep needed datetime objects
 # from contextlib import contextmanager # Unused
 # from concurrent.futures import ThreadPoolExecutor, Future # Unused
 import uvicorn  # Used in start_api_server
@@ -43,12 +43,12 @@ from backend.utils.api_utils import (
 # from backend.services import execute_stock_analysis # Unused
 from backend.schemas import LLMInteractionLog  # Keep
 from backend.schemas import AgentExecutionLog  # Keep
-from src.utils.serialization import serialize_agent_state  # Keep
+from utils.serialization import serialize_agent_state  # Keep
 
 # 导入日志记录器
 try:
     # log_agent_execution is no longer needed here
-    from src.utils.llm_interaction_logger import set_global_log_storage  # Keep
+    from utils.llm_interaction_logger import set_global_log_storage  # Keep
     from backend.dependencies import get_log_storage
     _has_log_system = True
 except ImportError:
@@ -113,7 +113,7 @@ def log_llm_interaction(state):
             formatted_request = format_llm_request(request_data)
             formatted_response = format_llm_response(response_data)
 
-            timestamp = datetime.now(UTC)
+            timestamp = datetime.now(timezone.utc)
 
             # 获取当前运行ID
             run_id = api_state.current_run_id
@@ -178,7 +178,7 @@ def log_llm_interaction(state):
             # 如果state中没有，尝试从上下文变量中获取
             if not agent_name:
                 try:
-                    from src.utils.llm_interaction_logger import current_agent_name_context, current_run_id_context
+                    from utils.llm_interaction_logger import current_agent_name_context, current_run_id_context
                     agent_name = current_agent_name_context.get()
                     run_id = current_run_id_context.get()
                 except (ImportError, AttributeError):
@@ -190,7 +190,7 @@ def log_llm_interaction(state):
                 run_id = api_state.current_run_id
 
             if agent_name:
-                timestamp = datetime.now(UTC)
+                timestamp = datetime.now(timezone.utc)
 
                 # 提取messages参数
                 messages = None
@@ -277,7 +277,7 @@ def agent_endpoint(agent_name: str, description: str = ""):
             # 确保run_id在元数据中，这对日志记录至关重要
             run_id = state.get("metadata", {}).get("run_id")
             # 记录输入状态
-            timestamp_start = datetime.now(UTC)
+            timestamp_start = datetime.now(timezone.utc)
             serialized_input = serialize_agent_state(state)
             api_state.update_agent_data(
                 agent_name, "input_state", serialized_input)
@@ -306,7 +306,7 @@ def agent_endpoint(agent_name: str, description: str = ""):
                 result = agent_func(state)
                 # --------------------------
 
-                timestamp_end = datetime.now(UTC)
+                timestamp_end = datetime.now(timezone.utc)
 
                 # 恢复标准输出/错误
                 sys.stdout = old_stdout
@@ -372,7 +372,7 @@ def agent_endpoint(agent_name: str, description: str = ""):
                 return result
             except Exception as e:
                 # Record end time even on error
-                timestamp_end = datetime.now(UTC)
+                timestamp_end = datetime.now(timezone.utc)
                 error = str(e)
                 # 恢复标准输出/错误
                 sys.stdout = old_stdout

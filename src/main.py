@@ -11,23 +11,23 @@ import pandas as pd
 import akshare as ak
 
 # --- Agent Imports ---
-from src.agents.valuation import valuation_agent
-from src.agents.state import AgentState
-from src.agents.sentiment import sentiment_agent
-from src.agents.risk_manager import risk_management_agent
-from src.agents.technicals import technical_analyst_agent
-from src.agents.portfolio_manager import portfolio_management_agent
-from src.agents.market_data import market_data_agent
-from src.agents.fundamentals import fundamentals_agent
-from src.agents.researcher_bull import researcher_bull_agent
-from src.agents.researcher_bear import researcher_bear_agent
-from src.agents.debate_room import debate_room_agent
+from agents.valuation import valuation_agent
+from agents.state import AgentState
+from agents.sentiment import sentiment_agent
+from agents.risk_manager import risk_management_agent
+from agents.technicals import technical_analyst_agent
+from agents.portfolio_manager import portfolio_management_agent
+from agents.market_data import market_data_agent
+from agents.fundamentals import fundamentals_agent
+from agents.researcher_bull import researcher_bull_agent
+from agents.researcher_bear import researcher_bear_agent
+from agents.debate_room import debate_room_agent
 
 # --- Logging and Backend Imports ---
-from src.utils.output_logger import OutputLogger
+from utils.output_logger import OutputLogger
 # 导入原始函数，但不再进行猴子补丁
-from src.tools.openrouter_config import get_chat_completion
-from src.utils.llm_interaction_logger import (
+from tools.openrouter_config import get_chat_completion
+from utils.llm_interaction_logger import (
     log_agent_execution,
     set_global_log_storage
 )
@@ -46,7 +46,7 @@ set_global_log_storage(log_storage)  # Set storage in context for the wrapper
 # logged_get_chat_completion = wrap_llm_call(original_get_chat_completion)
 
 # 3. Monkey-patch the function in its original module
-# src.tools.openrouter_config.get_chat_completion = logged_get_chat_completion
+# tools.openrouter_config.get_chat_completion = logged_get_chat_completion
 # Optional: Confirmation message
 # print("--- Patched get_chat_completion for logging ---")
 

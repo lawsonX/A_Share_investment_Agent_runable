@@ -6,7 +6,7 @@
 
 import logging
 from typing import Dict, Any
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 from ..models.api_models import StockAnalysisRequest
 from ..utils.context_managers import workflow_run
@@ -38,8 +38,8 @@ def execute_stock_analysis(request: StockAnalysisRequest, run_id: str) -> Dict[s
         workflow_log = AgentExecutionLog(
             agent_name="workflow_manager",
             run_id=run_id,
-            timestamp_start=datetime.now(UTC),
-            timestamp_end=datetime.now(UTC),  # 初始化为相同值，稍后更新
+            timestamp_start=datetime.now(timezone.utc),
+            timestamp_end=datetime.now(timezone.utc),  # 初始化为相同值，稍后更新
             input_state={"request": request.dict()},
             output_state=None  # 稍后更新
         )
@@ -58,7 +58,7 @@ def execute_stock_analysis(request: StockAnalysisRequest, run_id: str) -> Dict[s
             )
 
             # 更新工作流日志的结束时间和输出状态
-            # workflow_log.timestamp_end = datetime.now(UTC)
+            # workflow_log.timestamp_end = datetime.now(timezone.utc)
             # workflow_log.output_state = result
 
             # 添加到日志存储
@@ -71,7 +71,7 @@ def execute_stock_analysis(request: StockAnalysisRequest, run_id: str) -> Dict[s
 
         # 在出错时也记录日志
         # try:
-        #     workflow_log.timestamp_end = datetime.now(UTC)
+        #     workflow_log.timestamp_end = datetime.now(timezone.utc)
         #     workflow_log.output_state = {"error": str(e)}
         #     log_storage.add_agent_log(workflow_log)
         # except Exception as log_err:

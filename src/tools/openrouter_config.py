@@ -4,8 +4,8 @@ from google import genai
 from dotenv import load_dotenv
 from dataclasses import dataclass
 import backoff
-from src.utils.logging_config import setup_logger, SUCCESS_ICON, ERROR_ICON, WAIT_ICON
-from src.utils.llm_clients import LLMClientFactory
+from utils.logging_config import setup_logger, SUCCESS_ICON, ERROR_ICON, WAIT_ICON
+from utils.llm_clients import LLMClientFactory
 
 # 设置日志记录
 logger = setup_logger('api_calls')

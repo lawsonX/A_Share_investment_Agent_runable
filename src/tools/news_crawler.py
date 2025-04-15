@@ -5,7 +5,7 @@ from datetime import datetime
 import akshare as ak
 import requests
 from bs4 import BeautifulSoup
-from src.tools.openrouter_config import get_chat_completion, logger as api_logger
+from tools.openrouter_config import get_chat_completion, logger as api_logger
 import time
 import pandas as pd
 

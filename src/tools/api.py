@@ -4,7 +4,7 @@ import akshare as ak
 from datetime import datetime, timedelta
 import json
 import numpy as np
-from src.utils.logging_config import setup_logger
+from utils.logging_config import setup_logger
 
 # 设置日志记录
 logger = setup_logger('api')

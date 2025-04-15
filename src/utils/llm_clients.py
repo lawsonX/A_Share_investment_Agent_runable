@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 from dotenv import load_dotenv
 from openai import OpenAI
 from google import genai
-from src.utils.logging_config import setup_logger, SUCCESS_ICON, ERROR_ICON, WAIT_ICON
+from utils.logging_config import setup_logger, SUCCESS_ICON, ERROR_ICON, WAIT_ICON
 
 # 设置日志记录
 logger = setup_logger('llm_clients')

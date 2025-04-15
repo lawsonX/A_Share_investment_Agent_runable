@@ -3,7 +3,7 @@ from typing import Annotated, Any, Dict, Sequence, TypedDict
 import operator
 from langchain_core.messages import BaseMessage
 import json
-from src.utils.logging_config import setup_logger
+from utils.logging_config import setup_logger
 
 # 设置日志记录
 logger = setup_logger('agent_state')
